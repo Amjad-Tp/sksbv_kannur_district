@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "416378919622",
+    "project_id": "sksbv-kannur-jilla",
+    "storage_bucket": "sksbv-kannur-jilla.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416378919622:android:95e2c12cc3018e646f55c7",
+        "android_client_info": {
+          "package_name": "com.example.sksbv_kannur_jilla"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Vw7ICrJDNhkIxVallV-8D4LaKwn2-9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
