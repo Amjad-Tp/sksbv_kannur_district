@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-const lightBlue = Color(0xFF45C1DD);
-const darkBlue = Color(0xFF0890B2);
-const lightRed = Color(0xFFFFB8B8);
+const royalBlue = Color(0xFF405DE6);
+const blueNormal = Color(0xFF5B51D8);
+const purple = Color(0xFF833AB4);
+const darkPink = Color(0xFFC13584);
 
 const whiteColor = Colors.white;
 const blackColor = Colors.black;
-const blackButton = Color(0xFF212121);
+const lightBlackColor = Color(0xFF1D1D1D);
 
 const scaffoldColor = Color(0xFFF2F2F2);
 
-const lightGrey = Color(0xFFE6E6E6);
-const greyColor = Color(0xFFDBDADA);
-const darkGreyColor = Color(0xFF6F6F6F);
-
-const dividerColor = Colors.grey;
+const greyColor = Color(0xFFC5C5C5);
+const lightGreyColor = Color(0xFFECECEC);
 
 const redColor = Colors.red;
 const orengeColor = Colors.orange;
@@ -34,7 +32,9 @@ final shadow = [
   ), //-----BoxShadow of custome card(container)
 ];
 
-const LinearGradient gradient = LinearGradient(colors: [lightBlue, darkBlue]);
+const LinearGradient gradient = LinearGradient(
+  colors: [royalBlue, blueNormal, purple, darkPink],
+);
 
 const cSizedBox5 = SizedBox(height: 5);
 const cSizedBox10 = SizedBox(height: 10);

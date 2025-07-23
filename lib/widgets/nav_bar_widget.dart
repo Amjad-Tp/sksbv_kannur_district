@@ -50,8 +50,8 @@ class NavBar extends StatelessWidget {
                       ),
                     if (isWide) ...[
                       cSizedBoxWidth70,
-                      const Text('SKSBV', style: TextStyle(color: whiteColor)),
-                      cSizedBoxWidth30,
+                      Image.asset('assets/images/sksbv_logo.png', height: 65),
+                      cSizedBoxWidth70,
                       Obx(() {
                         final selectedIndex = navController.currentIndex.value;
                         const double itemWidth = 100;
@@ -74,7 +74,7 @@ class NavBar extends StatelessWidget {
                                 ),
                               ),
 
-                              // 👆 Nav items
+                              // Nav items
                               Row(
                                 children: List.generate(
                                   navTitles.length,

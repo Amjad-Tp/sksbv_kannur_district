@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sksbv_kannur_jilla/controller/nav_bar_controller.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 
@@ -17,40 +16,14 @@ class CustomDrawer extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 50,
-                bottom: 20,
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    'AutoShine',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    'Book Your Car Wash',
-                    style: GoogleFonts.corinthia(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  cSizedBox5,
-                  const Text(
-                    'Version 1.0.0',
-                    style: TextStyle(fontSize: 12, color: dividerColor),
-                  ),
-                ],
-              ),
-            ),
+            cSizedBox40,
+            Image.asset('assets/images/sksbv-logo-black.png', width: 150),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Divider(color: dividerColor),
+              child: Divider(color: greyColor),
             ),
 
-            drawerItem('Home', 'assets/icons/dashboard-black.png', () {
+            drawerItem('Home', Icons.home_rounded, () {
               navController.changeTab(0);
               Get.back();
             }),
@@ -60,7 +33,7 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  InkWell drawerItem(String title, String imagePath, VoidCallback navigation) {
+  InkWell drawerItem(String title, IconData icon, VoidCallback navigation) {
     return InkWell(
       onTap: navigation,
       child: Padding(
@@ -69,7 +42,7 @@ class CustomDrawer extends StatelessWidget {
           height: 60,
           child: Row(
             children: [
-              // Image.asset(imagePath, width: 25, fit: BoxFit.cover),
+              Icon(icon, color: blackColor),
               cSizedBoxWidth15,
               Text(
                 title,
