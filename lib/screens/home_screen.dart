@@ -15,14 +15,18 @@ class HomeScreen extends StatelessWidget {
       child: Padding(
         padding: screenPadding,
         child: Column(
-          children: [_buildImage(isWide), cSizedBox40, _buildRegisterSection()],
+          children: [
+            _buildImage(isWide),
+            cSizedBox40,
+            _buildRegisterSection(context),
+          ],
         ),
       ),
     );
   }
 
   //----Registration button with information
-  Row _buildRegisterSection() {
+  Row _buildRegisterSection(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -32,7 +36,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         buildThemeTextButton(
-          function: () => Get.to(() => const LoginScreen()),
+          function: () => Get.to(() => const ZoneLoginScreen()),
           name: "Register",
         ),
       ],

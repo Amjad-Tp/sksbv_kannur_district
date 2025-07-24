@@ -18,15 +18,20 @@ class RegistrationServices {
           .get();
 
       if (query.docs.length >= allowedCount) {
-        return '${member.position} already has $allowedCount members in ${member.zone}.';
+        return '${member.position} already has $allowedCount members in ${member.zone} zone.';
       }
 
       await memberRef.doc(member.id).set(member.toMap());
 
       return null;
     } catch (e) {
-      print('Error: ${e.toString()}');
       return 'Error: ${e.toString()}';
     }
+  }
+
+  Future<List<MemberModel>> fetchAllMember(String zoneId) async {
+    final snapshot = await _fireStore.doc(zoneId).collection('Members').get();
+
+    return snapshot.docs.map((doc) => MemberModel.fromMap(doc.data())).toList();
   }
 }

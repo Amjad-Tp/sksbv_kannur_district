@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sksbv_kannur_jilla/controller/nav_bar_controller.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 import 'package:sksbv_kannur_jilla/screens/home_screen.dart';
+import 'package:sksbv_kannur_jilla/screens/registered_members_screen.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_container.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_drawer.dart';
 
@@ -13,9 +14,12 @@ class NavBar extends StatelessWidget {
   final NavBarController navController = Get.find<NavBarController>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final List<Widget> navPages = [const HomeScreen()];
+  final List<String> navTitles = ['Home', 'Registered Members'];
 
-  final List<String> navTitles = ['Home'];
+  final List<Widget> navPages = [
+    const HomeScreen(),
+    const RegisteredMembersScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,9 @@ class NavBar extends StatelessWidget {
                                   width: itemWidth,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    color: whiteColor.withValues(alpha: .2),
+                                    color: lightBlackColor.withValues(
+                                      alpha: .2,
+                                    ),
                                     borderRadius: borderRadius8,
                                   ),
                                 ),
@@ -86,6 +92,7 @@ class NavBar extends StatelessWidget {
                                       height: 60,
                                       child: Text(
                                         navTitles[index],
+                                        textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontSize: 13,
                                           color: whiteColor,

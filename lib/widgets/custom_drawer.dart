@@ -20,11 +20,16 @@ class CustomDrawer extends StatelessWidget {
             Image.asset('assets/images/sksbv-logo-black.png', width: 150),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Divider(color: greyColor),
+              child: Divider(color: lightGreyColor),
             ),
 
             drawerItem('Home', Icons.home_rounded, () {
               navController.changeTab(0);
+              Get.back();
+            }),
+
+            drawerItem('Registered Members', Icons.groups_2_rounded, () {
+              navController.changeTab(1);
               Get.back();
             }),
           ],

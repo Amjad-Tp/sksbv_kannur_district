@@ -17,13 +17,13 @@ final Map<String, String> zoneCredentials = {
   '1021': '20251', // Payyannur
   '1022': '20252', // Madayi
   '1023': '20253', // Thallipparamba
-  '1024': 'sreekandapuram123', // Sreekandapuram
-  '1025': 'kambil123', // Kambil
-  '1026': 'kannur123', // Kannur
-  '1027': 'mowanchery123', // Mowanchery
-  '1028': 'iritty123', // Iritty
-  '1029': 'panur123', // Panur
-  '1030': 'thalasseri123', // Thalasseri
+  '1024': '20254', // Sreekandapuram
+  '1025': '20255', // Kambil
+  '1026': '20256', // Kannur
+  '1027': '20257', // Mowanchery
+  '1028': '20258', // Iritty
+  '1029': '20259', // Panur
+  '1030': '20250', // Thalasseri
 };
 
 //---- zone maping for registration

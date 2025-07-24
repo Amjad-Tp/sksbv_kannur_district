@@ -10,8 +10,8 @@ import 'package:sksbv_kannur_jilla/screens/register_screen.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_container.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_text_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class ZoneLoginScreen extends StatelessWidget {
+  const ZoneLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class LoginScreen extends StatelessWidget {
                 userNameController,
                 passwordController,
                 formKey,
+                context,
               ),
             ],
           );
@@ -46,61 +47,72 @@ class LoginScreen extends StatelessWidget {
     TextEditingController userNameController,
     TextEditingController passwordController,
     GlobalKey<FormState> key,
+    BuildContext context,
   ) {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: isWide ? 450 : 350),
         child: CustomContainer(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-          child: Form(
-            key: key,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Zone Login',
-                  style: TextStyle(fontWeight: fwBold, fontSize: 22),
-                ),
-                cSizedBox20,
-                CustomTextField(
-                  controller: userNameController,
-                  keyboardType: TextInputType.number,
-                  labelText: 'User Name',
-                  hintText: 'User Name',
-                  prefixIcon: Icons.person_3_rounded,
-                ),
-                cSizedBox20,
-                CustomTextField(
-                  controller: passwordController,
-                  keyboardType: TextInputType.number,
-                  labelText: 'Password',
-                  hintText: 'password',
-                  prefixIcon: Icons.lock_rounded,
-                  obscureText: true,
-                ),
-                cSizedBox30,
-                buildThemeTextButton(
-                  function: () {
-                    if (key.currentState!.validate()) {
-                      String username = userNameController.text.trim();
-                      String password = passwordController.text.trim();
+          child: SingleChildScrollView(
+            child: Form(
+              key: key,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Zone Login',
+                    style: TextStyle(fontWeight: fwBold, fontSize: 22),
+                  ),
+                  cSizedBox20,
+                  CustomTextField(
+                    controller: userNameController,
+                    keyboardType: TextInputType.number,
+                    labelText: 'User Name',
+                    hintText: 'User Name',
+                    prefixIcon: Icons.person_3_rounded,
+                  ),
+                  cSizedBox20,
+                  CustomTextField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.number,
+                    labelText: 'Password',
+                    hintText: 'password',
+                    prefixIcon: Icons.lock_rounded,
+                    obscureText: true,
+                  ),
+                  cSizedBox30,
+                  buildThemeTextButton(
+                    function: () {
+                      if (key.currentState!.validate()) {
+                        String username = userNameController.text.trim();
+                        String password = passwordController.text.trim();
 
-                      if (zoneCredentials[username] == password) {
-                        final zoneName = zoneMapping[username]!;
-                        Get.off(
-                          () => RegisterationScreen(
-                            zoneName: zoneName,
-                            zoneId: username,
-                          ),
-                        );
-                      } else {
-                        snackbar('Login Failed, Invalid username or password');
+                        if (zoneCredentials[username] == password) {
+                          final zoneName = zoneMapping[username]!;
+
+                          Get.off(
+                            () => RegisterationScreen(
+                              zoneName: zoneName,
+                              zoneId: username,
+                            ),
+                          );
+
+                          showSuccessSnackbar(
+                            message: 'Welcome to $zoneName zone',
+                          );
+                        } else {
+                          showErrorSnackbar(
+                            message:
+                                'Login Failed, Invalid username or password',
+                          );
+                        }
                       }
-                    }
-                  },
-                  name: 'Login',
-                ),
-              ],
+                    },
+                    name: 'Login',
+                  ),
+                ],
+              ),
             ),
           ),
         ),

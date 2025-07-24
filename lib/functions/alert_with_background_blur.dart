@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
@@ -11,7 +10,7 @@ void alertWithBackgroundBlur({
   VoidCallback? backButtonFunction,
   required String buttonName,
   String? cancelButton,
-}) async {
+}) {
   Get.dialog(
     Stack(
       children: [
@@ -44,7 +43,7 @@ void alertWithBackgroundBlur({
                   style: const TextStyle(color: blackColor),
                 ),
               ),
-              // Logout button
+              // Yes button
               TextButton(
                 onPressed: () {
                   function();

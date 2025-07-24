@@ -16,7 +16,7 @@ void registerMember(
   final name = nameController.text.trim();
   final position = registerController.selectedPosition.value;
   if (name.isEmpty || zone.isEmpty || position.isEmpty) {
-    snackbar('Fill the Fields');
+    showErrorSnackbar(message: 'Fill the Feilds');
     return;
   }
   alertWithBackgroundBlur(
@@ -38,9 +38,9 @@ void registerMember(
       final result = await registrationService.registerMember(member);
 
       if (result != null) {
-        snackbar(result);
+        showErrorSnackbar(message: result);
       } else {
-        snackbar('$name is Registered');
+        showSuccessSnackbar(message: '$name is Registered as $position');
         clearFilds(nameController, registerController);
       }
     },

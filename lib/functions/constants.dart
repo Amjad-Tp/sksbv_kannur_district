@@ -11,18 +11,17 @@ const lightBlackColor = Color(0xFF1D1D1D);
 
 const scaffoldColor = Color(0xFFF2F2F2);
 
-const greyColor = Color(0xFFC5C5C5);
-const lightGreyColor = Color(0xFFECECEC);
+const greyColor = Colors.grey;
+const lightGreyColor = Color(0xFFF0F0F0);
 
 const redColor = Colors.red;
-const orengeColor = Colors.orange;
-const darkOrenge = Colors.deepOrange;
-const greenColor = Colors.green;
+const greenColor = Color(0xFF5cb85c);
 const transparent = Colors.transparent;
 
 const screenPadding = EdgeInsets.only(top: 20, left: 15, right: 15);
 
 final BorderRadius borderRadius = BorderRadius.circular(10);
+final BorderRadius borderRadius20 = BorderRadius.circular(20);
 final BorderRadius borderRadius8 = BorderRadius.circular(8);
 
 final shadow = [
