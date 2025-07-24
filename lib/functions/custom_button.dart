@@ -13,6 +13,6 @@ TextButton buildThemeTextButton({
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
     ),
-    child: const Text('Register'),
+    child: Text(name),
   );
 }

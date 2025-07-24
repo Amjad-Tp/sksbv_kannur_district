@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 import 'package:sksbv_kannur_jilla/functions/custom_button.dart';
-import 'package:sksbv_kannur_jilla/screens/register_screen.dart';
+import 'package:sksbv_kannur_jilla/screens/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         buildThemeTextButton(
-          function: () => Get.to(() => const RegisterationScreen()),
+          function: () => Get.to(() => const LoginScreen()),
           name: "Register",
         ),
       ],

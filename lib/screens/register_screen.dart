@@ -3,44 +3,26 @@ import 'package:get/get.dart';
 import 'package:sksbv_kannur_jilla/controller/register_controller.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 import 'package:sksbv_kannur_jilla/functions/custom_button.dart';
+import 'package:sksbv_kannur_jilla/functions/maps.dart';
 import 'package:sksbv_kannur_jilla/functions/register_member.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_appbar.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_container.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_text_field.dart';
 
 class RegisterationScreen extends StatelessWidget {
-  const RegisterationScreen({super.key});
+  final String zoneName;
+  final String zoneId;
+  const RegisterationScreen({
+    super.key,
+    required this.zoneName,
+    required this.zoneId,
+  });
 
   @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
-    List<String> zones = [
-      "Payyannur",
-      "Madayi",
-      "Thalipparamba",
-      "Sreekandapuram",
-      "Kambil",
-      "Kannur",
-      "Mowanchery",
-      "Iritty",
-      "Panur",
-      "Thalasseri",
-    ];
 
-    List<String> positions = [
-      "President",
-      "JN. Secretary",
-      "Treasurer",
-      "Working Secretary",
-      "Vice.President",
-      "Join. Secretary",
-      "Tech Admin",
-      "Khidma Coordinator",
-      "Adab Coordinator",
-      "Alif Coordinator",
-    ];
-
-    final controller = Get.put(RegisterController());
+    final registerController = Get.put(RegisterController());
     return Scaffold(
       body: Column(
         children: [
@@ -53,9 +35,9 @@ class RegisterationScreen extends StatelessWidget {
                   padding: screenPadding,
                   child: Column(
                     children: [
-                      const Text(
-                        'Register Here',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                      Text(
+                        'Zone (മേഖല) - ${zoneName.toUpperCase()}',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       cSizedBox20,
                       //---name text field
@@ -65,41 +47,24 @@ class RegisterationScreen extends StatelessWidget {
                         hintText: 'Name',
                       ),
                       cSizedBox20,
-                      //--- Zone container
-                      Obx(
-                        () => _buildContainerForZonePosition(
-                          controller: controller,
-                          items: zones,
-                          title: 'Choose Zone (മേഖല)',
-                          hintText: 'Choose Zone',
-                          selectedText: controller.selectedZone.value,
-                          onItemSelected: (zone) =>
-                              controller.selectMeghala(zone),
-                        ),
-                      ),
-                      cSizedBox20,
 
                       /// Position Container
                       Obx(
                         () => _buildContainerForZonePosition(
-                          controller: controller,
-                          items: positions,
-                          title: 'Choose Position (മേഖല സ്ഥാനം)',
-                          hintText: 'Choose Position',
-                          selectedText: controller.selectedPosition.value,
-                          onItemSelected: (pos) =>
-                              controller.selectPosition(pos),
+                          controller: registerController,
                         ),
                       ),
                       cSizedBox30,
                       //---- Register button
                       buildThemeTextButton(
                         function: () {
-                          final name = nameController.text.trim();
-                          final zone = controller.selectedZone.value;
-                          final position = controller.selectedPosition.value;
-
-                          registerMember(context, name, zone, position);
+                          registerMember(
+                            context,
+                            nameController,
+                            registerController,
+                            zoneName,
+                            zoneId,
+                          );
                         },
                         name: "Register",
                       ),
@@ -119,50 +84,46 @@ class RegisterationScreen extends StatelessWidget {
   //----------Container for zone and position
   CustomContainer _buildContainerForZonePosition({
     required RegisterController controller,
-    required List<String> items,
-    required String title,
-    required String hintText,
-    required String selectedText,
-    required Function(String) onItemSelected,
   }) {
     return CustomContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+          const Text(
+            'Choose Position (മേഖല സ്ഥാനം)',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
           cSizedBox10,
           CustomTextField(
             readOnly: true,
-            controller: TextEditingController(text: selectedText),
-            hintText: hintText,
+            controller: TextEditingController(
+              text: controller.selectedPosition.value,
+            ),
+            hintText: 'Choose Position',
           ),
           cSizedBox15,
-          _buildChoiceChips(items, selectedText, onItemSelected),
+          _buildChoiceChips(controller),
         ],
       ),
     );
   }
 
   //---------ChoiceChips.....
-  Wrap _buildChoiceChips(
-    List<String> allItems,
-    String selectedItem,
-    Function(String) onItemSelected,
-  ) {
+  Wrap _buildChoiceChips(RegisterController controller) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children: allItems.map((item) {
-        final isSelected = selectedItem == item;
+      children: positions.map((pos) {
+        final isSelected = controller.selectedPosition.value == pos;
         return ChoiceChip(
-          label: Text(item, style: const TextStyle(fontSize: 13)),
+          label: Text(pos, style: const TextStyle(fontSize: 13)),
           selected: isSelected,
           selectedColor: purple,
           backgroundColor: lightGreyColor,
           checkmarkColor: whiteColor,
           onSelected: (selected) {
             if (selected) {
-              onItemSelected(item);
+              controller.selectPosition(pos);
             }
           },
           shape: RoundedRectangleBorder(

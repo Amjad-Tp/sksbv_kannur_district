@@ -35,16 +35,21 @@ final shadow = [
 const LinearGradient gradient = LinearGradient(
   colors: [royalBlue, blueNormal, purple, darkPink],
 );
-
+//----sized box height
 const cSizedBox5 = SizedBox(height: 5);
 const cSizedBox10 = SizedBox(height: 10);
 const cSizedBox15 = SizedBox(height: 15);
 const cSizedBox20 = SizedBox(height: 20);
 const cSizedBox30 = SizedBox(height: 30);
 const cSizedBox40 = SizedBox(height: 40);
-
+//----sized box width
 const cSizedBoxWidth5 = SizedBox(width: 5);
 const cSizedBoxWidth10 = SizedBox(width: 10);
 const cSizedBoxWidth15 = SizedBox(width: 15);
 const cSizedBoxWidth30 = SizedBox(width: 30);
 const cSizedBoxWidth70 = SizedBox(width: 70);
+
+//----FontWeight
+const FontWeight fw500 = FontWeight.w500;
+const FontWeight fw600 = FontWeight.w600;
+const FontWeight fwBold = FontWeight.w700;
