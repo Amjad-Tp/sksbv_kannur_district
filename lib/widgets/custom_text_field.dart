@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? labelText;
   final String? hintText;
   final bool? readOnly;
@@ -10,9 +10,12 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final IconData? prefixIcon;
   final bool? obscureText;
+  final ValueChanged<String>? onChanged;
+  final int? maxLength;
+  final String? prefixText;
   const CustomTextField({
     super.key,
-    required this.controller,
+    this.controller,
     this.labelText,
     this.hintText,
     this.readOnly,
@@ -20,6 +23,9 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.prefixIcon,
     this.obscureText,
+    this.onChanged,
+    this.maxLength,
+    this.prefixText,
   });
 
   @override
@@ -31,6 +37,8 @@ class CustomTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       keyboardType: keyboardType ?? TextInputType.text,
       obscureText: obscureText ?? false,
+      onChanged: onChanged,
+      maxLength: maxLength,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(12),
         labelText: labelText,
@@ -42,6 +50,9 @@ class CustomTextField extends StatelessWidget {
           color: blackColor.withValues(alpha: .7),
           fontSize: 13,
         ),
+        hintStyle: const TextStyle(color: greyColor),
+        prefixText: prefixText,
+        prefixStyle: const TextStyle(color: lightBlackColor),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: royalBlue, width: 2),

@@ -4,6 +4,7 @@ class MemberModel {
   final String zone;
   final String zoneId;
   final String position;
+  final String phone;
 
   MemberModel({
     required this.id,
@@ -11,6 +12,7 @@ class MemberModel {
     required this.zone,
     required this.zoneId,
     required this.position,
+    required this.phone,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,8 +20,9 @@ class MemberModel {
       'id': id,
       'name': name,
       'zone': zone,
-      zoneId: 'zoneId',
+      'zoneId': zoneId,
       'position': position,
+      'phone': phone,
     };
   }
 
@@ -30,6 +33,7 @@ class MemberModel {
       zone: map['zone'] ?? '',
       zoneId: map['zoneId'] ?? '',
       position: map['position'] ?? '',
+      phone: map['phone'] ?? '',
     );
   }
 }

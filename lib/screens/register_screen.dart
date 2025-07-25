@@ -21,6 +21,7 @@ class RegisterationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
+    final phoneController = TextEditingController();
 
     final registerController = Get.put(RegisterController());
     return Scaffold(
@@ -30,7 +31,7 @@ class RegisterationScreen extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 800),
+                constraints: const BoxConstraints(maxWidth: 600),
                 child: Padding(
                   padding: screenPadding,
                   child: Column(
@@ -48,19 +49,35 @@ class RegisterationScreen extends StatelessWidget {
                       ),
                       cSizedBox20,
 
+                      //---Phone text field
+                      CustomTextField(
+                        controller: phoneController,
+                        labelText: 'Phone',
+                        hintText: 'Phone number of the member (not admin)',
+                        maxLength: 10,
+                        prefixText: '+91 ',
+                      ),
+                      cSizedBox20,
+
                       /// Position Container
                       Obx(
                         () => _buildContainerForZonePosition(
                           controller: registerController,
                         ),
                       ),
-                      cSizedBox30,
+                      cSizedBox20,
+                      const Text(
+                        "Please check that all details are correct before registering. You won't be able to edit them afterward.",
+                        textAlign: TextAlign.center,
+                      ),
+                      cSizedBox20,
                       //---- Register button
                       buildThemeTextButton(
                         function: () {
                           registerMember(
                             context,
                             nameController,
+                            phoneController,
                             registerController,
                             zoneName,
                             zoneId,
@@ -90,7 +107,7 @@ class RegisterationScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Choose Position (മേഖല സ്ഥാനം)',
+            'Choose Designation (മേഖല സ്ഥാനം)',
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           cSizedBox10,
@@ -99,7 +116,7 @@ class RegisterationScreen extends StatelessWidget {
             controller: TextEditingController(
               text: controller.selectedPosition.value,
             ),
-            hintText: 'Choose Position',
+            hintText: 'Choose Designation',
           ),
           cSizedBox15,
           _buildChoiceChips(controller),

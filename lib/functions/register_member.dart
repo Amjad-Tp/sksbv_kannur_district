@@ -9,14 +9,22 @@ import 'package:uuid/uuid.dart';
 void registerMember(
   BuildContext context,
   TextEditingController nameController,
+  TextEditingController phoneController,
   RegisterController registerController,
   String zone,
   String zoneId,
 ) {
   final name = nameController.text.trim();
+  final phone = phoneController.text.trim();
   final position = registerController.selectedPosition.value;
-  if (name.isEmpty || zone.isEmpty || position.isEmpty) {
+  if (name.isEmpty || zone.isEmpty || position.isEmpty || phone.isEmpty) {
     showErrorSnackbar(message: 'Fill the Feilds');
+    return;
+  } else if (!RegExp(r'^[0-9]+$').hasMatch(phone)) {
+    showErrorSnackbar(message: 'Enter only Numbers');
+    return;
+  } else if (phone.length != 10) {
+    showErrorSnackbar(message: 'Phone number must be 10 digits');
     return;
   }
   alertWithBackgroundBlur(
@@ -33,6 +41,7 @@ void registerMember(
         zone: zone,
         position: position,
         zoneId: zoneId,
+        phone: phone,
       );
 
       final result = await registrationService.registerMember(member);
@@ -41,7 +50,7 @@ void registerMember(
         showErrorSnackbar(message: result);
       } else {
         showSuccessSnackbar(message: '$name is Registered as $position');
-        clearFilds(nameController, registerController);
+        clearFilds(nameController, phoneController, registerController);
       }
     },
     cancelButton: 'No',
@@ -51,8 +60,10 @@ void registerMember(
 
 void clearFilds(
   TextEditingController nameController,
+  TextEditingController phoneController,
   RegisterController registerController,
 ) {
   nameController.clear();
+  phoneController.clear();
   registerController.selectedPosition.value = '';
 }
