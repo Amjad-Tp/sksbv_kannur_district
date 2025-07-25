@@ -4,8 +4,6 @@ import 'package:sksbv_kannur_jilla/functions/maps.dart';
 import 'package:sksbv_kannur_jilla/models/registration_model.dart';
 import 'package:sksbv_kannur_jilla/services/registration_services.dart';
 
-enum SortField { position, name }
-
 class RegisteredMembersScreenController extends GetxController {
   final refreshController = RefreshController(initialRefresh: false);
   final _service = RegistrationServices();
@@ -15,8 +13,6 @@ class RegisteredMembersScreenController extends GetxController {
   final zoneMembers = <String, List<MemberModel>>{}.obs;
 
   final searchQuery = ''.obs;
-  final sortField = SortField.position.obs;
-  final ascending = true.obs;
 
   @override
   void onInit() {
@@ -35,44 +31,50 @@ class RegisteredMembersScreenController extends GetxController {
       zoneMembers.value = data;
     } finally {
       refreshController.refreshCompleted();
+      isLoading.value = false;
     }
-    isLoading.value = false;
   }
 
   void onRefresh() => fetchMembers();
 
-  // ------- UI helpers --------
-  List<MemberModel> _applySearchAndSort(List<MemberModel> list) {
-    final q = searchQuery.value.toLowerCase();
-    var filtered = list.where((m) {
-      return m.name.toLowerCase().contains(q) ||
-          m.position.toLowerCase().contains(q);
-    }).toList();
-
-    int Function(MemberModel a, MemberModel b) comparator;
-    switch (sortField.value) {
-      case SortField.position:
-        comparator = (a, b) => a.position.compareTo(b.position);
-        break;
-      case SortField.name:
-        comparator = (a, b) => a.name.compareTo(b.name);
-        break;
-    }
-
-    filtered.sort(comparator);
-    if (!ascending.value) {
-      filtered = filtered.reversed.toList();
-    }
-    return filtered;
-  }
-
-  /// Returns the processed (searched + sorted) members of a zone
+  /// Returns filtered members of a zone based on searchQuery
   List<MemberModel> membersForZone(String zoneId) {
     final base = zoneMembers[zoneId] ?? const <MemberModel>[];
-    return _applySearchAndSort(base);
+    if (searchQuery.isEmpty) return base;
+
+    final query = searchQuery.value.toLowerCase();
+    return base.where((m) {
+      return m.name.toLowerCase().contains(query) ||
+          m.position.toLowerCase().contains(query);
+    }).toList();
   }
 
-  void setSearch(String v) => searchQuery.value = v;
-  void setSortField(SortField f) => sortField.value = f;
-  void toggleAscending() => ascending.value = !ascending.value;
+  List<MapEntry<String, String>> filteredZones() {
+    if (searchQuery.isEmpty) return zoneMapping.entries.toList();
+
+    final query = searchQuery.value.toLowerCase();
+
+    // Filter zones by zone name OR if any member matches the query
+    return zoneMapping.entries.where((entry) {
+      final zoneId = entry.key;
+      final zoneName = entry.value.toLowerCase();
+
+      // Zone name match
+      final zoneMatches = zoneName.contains(query);
+
+      // Members match
+      final membersMatch = (zoneMembers[zoneId] ?? []).any(
+        (m) =>
+            m.name.toLowerCase().contains(query) ||
+            m.position.toLowerCase().contains(query),
+      );
+
+      return zoneMatches || membersMatch;
+    }).toList();
+  }
+
+  /// Update search text
+  void updateSearch(String value) {
+    searchQuery.value = value;
+  }
 }

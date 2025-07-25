@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sksbv_kannur_jilla/functions/circular_progress_indicator.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
-import 'package:sksbv_kannur_jilla/functions/maps.dart';
 import 'package:sksbv_kannur_jilla/screens/registered_members_screen_controller.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_container.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_text_field.dart';
@@ -34,7 +33,7 @@ class RegisteredMembersScreen extends StatelessWidget {
                 children: [
                   _Header(controller: controller),
                   cSizedBox10,
-                  ...zoneMapping.entries.map(
+                  ...controller.filteredZones().map(
                     (entry) => _ZoneSection(
                       zoneId: entry.key,
                       zoneName: entry.value,
@@ -68,42 +67,11 @@ class _Header extends StatelessWidget {
           ),
           cSizedBox15,
           CustomTextField(
-            hintText: 'Search by name or position',
+            hintText: 'Search by Name or Designation or Zone',
             prefixIcon: Icons.search,
-            onChanged: controller.setSearch,
+            onChanged: controller.updateSearch,
           ),
           cSizedBox15,
-          // Row(
-          //   children: [
-          //     const Text('Sort by:'),
-          //     cSizedBoxWidth10,
-          //     DropdownButton<SortField>(
-          //       value: controller.sortField.value,
-          //       onChanged: (v) {
-          //         if (v != null) controller.setSortField(v);
-          //       },
-          //       items: const [
-          //         DropdownMenuItem(
-          //           value: SortField.position,
-          //           child: Text('Position'),
-          //         ),
-          //         DropdownMenuItem(value: SortField.name, child: Text('Name')),
-          //       ],
-          //     ),
-          //     cSizedBoxWidth15,
-          //     IconButton(
-          //       tooltip: controller.ascending.value
-          //           ? 'Ascending'
-          //           : 'Descending',
-          //       onPressed: controller.toggleAscending,
-          //       icon: Icon(
-          //         controller.ascending.value
-          //             ? Icons.arrow_upward_rounded
-          //             : Icons.arrow_downward_rounded,
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -123,36 +91,38 @@ class _ZoneSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final members = controller.membersForZone(zoneId);
+    return Obx(() {
+      final members = controller.membersForZone(zoneId);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: CustomContainer(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              zoneName,
-              style: const TextStyle(fontSize: 15, fontWeight: fw600),
-            ),
-            cSizedBox15,
-            if (members.isEmpty)
-              const Align(
-                alignment: Alignment.center,
-                child: Text('No Memeber Registered'),
-              )
-            else
-              ...List.generate(members.length, (index) {
-                final member = members[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: MemberTile(member: member),
-                );
-              }),
-          ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: CustomContainer(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                zoneName,
+                style: const TextStyle(fontSize: 15, fontWeight: fw600),
+              ),
+              cSizedBox15,
+              if (members.isEmpty)
+                const Align(
+                  alignment: Alignment.center,
+                  child: Text('No Member Registered'),
+                )
+              else
+                ...List.generate(members.length, (index) {
+                  final member = members[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: MemberTile(member: member),
+                  );
+                }),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
