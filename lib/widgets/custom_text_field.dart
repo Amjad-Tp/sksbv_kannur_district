@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final int? maxLength;
   final String? prefixText;
+  final TextCapitalization? capitalization;
   const CustomTextField({
     super.key,
     this.controller,
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.maxLength,
     this.prefixText,
+    this.capitalization,
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText ?? false,
       onChanged: onChanged,
       maxLength: maxLength,
+      textCapitalization: capitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(12),
         labelText: labelText,

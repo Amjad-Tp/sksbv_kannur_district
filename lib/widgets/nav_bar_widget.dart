@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sksbv_kannur_jilla/controller/nav_bar_controller.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
+import 'package:sksbv_kannur_jilla/screens/admin_login_screen.dart';
 import 'package:sksbv_kannur_jilla/screens/home_screen.dart';
 import 'package:sksbv_kannur_jilla/screens/registered_members_screen.dart';
 import 'package:sksbv_kannur_jilla/widgets/custom_container.dart';
@@ -18,22 +19,11 @@ class NavBar extends StatelessWidget {
 
   final List<Widget> navPages = [
     const HomeScreen(),
-    const RegisteredMembersScreen(),
+    const RegisteredMembersScreen(isAdmin: false),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // void logoutFunction() {
-    //   alertWithBackgroundBlur(
-    //     title: 'Are you sure',
-    //     function: () async {
-    //       await LoginService().logOut();
-    //       Get.offAll(AdminLoginScreen());
-    //     },
-    //     buttonName: 'Yes',
-    //   );
-    // }
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 1000;
@@ -108,24 +98,31 @@ class NavBar extends StatelessWidget {
                       }),
                     ],
 
-                    // const Spacer(),
-                    // isWide
-                    //     ? TextButton(
-                    //       onPressed: logoutFunction,
-                    //       style: TextButton.styleFrom(
-                    //         foregroundColor: whiteColor,
-                    //       ),
-                    //       child: Text(
-                    //         'Logout',
-                    //         style: const TextStyle(fontWeight: FontWeight.w400),
-                    //       ),
-                    //     )
-                    //     : buildIconButton(
-                    //       logoutFunction,
-                    //       Icons.logout_rounded,
-                    //       whiteColor,
-                    //     ),
-                    // if (isWide) cSizedBoxWidth70,
+                    const Spacer(),
+                    isWide
+                        ? TextButton.icon(
+                            onPressed: () =>
+                                Get.to(() => const AdminLoginScreen()),
+                            style: TextButton.styleFrom(
+                              foregroundColor: whiteColor,
+                            ),
+                            icon: const Icon(
+                              Icons.admin_panel_settings_rounded,
+                            ),
+                            label: const Text(
+                              'Admin',
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                          )
+                        : IconButton(
+                            onPressed: () =>
+                                Get.to(() => const AdminLoginScreen()),
+                            icon: const Icon(
+                              Icons.admin_panel_settings_rounded,
+                              color: whiteColor,
+                            ),
+                          ),
+                    if (isWide) cSizedBoxWidth70,
                   ],
                 ),
               ),

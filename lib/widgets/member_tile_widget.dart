@@ -5,8 +5,16 @@ import 'package:sksbv_kannur_jilla/functions/constants.dart';
 import 'package:sksbv_kannur_jilla/models/registration_model.dart';
 
 class MemberTile extends StatelessWidget {
-  const MemberTile({super.key, required this.member});
+  const MemberTile({
+    super.key,
+    required this.member,
+    this.isAdmin = false,
+    this.onDelete,
+  });
+
   final MemberModel member;
+  final bool isAdmin;
+  final VoidCallback? onDelete;
 
   void _copyPhone(BuildContext context, String phone) {
     Clipboard.setData(ClipboardData(text: phone));
@@ -59,6 +67,12 @@ class MemberTile extends StatelessWidget {
                 ),
               ),
             ),
+          if (isAdmin) ...[
+            IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: onDelete,
+            ),
+          ],
         ],
       ),
     );

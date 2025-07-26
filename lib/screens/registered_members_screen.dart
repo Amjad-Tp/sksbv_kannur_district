@@ -9,18 +9,21 @@ import 'package:sksbv_kannur_jilla/widgets/custom_text_field.dart';
 import 'package:sksbv_kannur_jilla/widgets/member_tile_widget.dart';
 
 class RegisteredMembersScreen extends StatelessWidget {
-  const RegisteredMembersScreen({super.key});
+  final bool isAdmin;
+  const RegisteredMembersScreen({super.key, this.isAdmin = false});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisteredMembersScreenController());
 
     return Obx(() {
-      if (controller.isLoading.value == true) {
+      if (controller.isLoading.value) {
         return buildCircularProgressIndicator();
       }
       return SmartRefresher(
-        controller: controller.refreshController,
+        controller: isAdmin
+            ? controller.adminRefreshController
+            : controller.refreshController,
         enablePullDown: true,
         onRefresh: controller.onRefresh,
         child: SingleChildScrollView(
@@ -38,6 +41,7 @@ class RegisteredMembersScreen extends StatelessWidget {
                       zoneId: entry.key,
                       zoneName: entry.value,
                       controller: controller,
+                      isAdmin: isAdmin,
                     ),
                   ),
                 ],
@@ -70,6 +74,7 @@ class _Header extends StatelessWidget {
             hintText: 'Search by Name or Designation or Zone',
             prefixIcon: Icons.search,
             onChanged: controller.updateSearch,
+            capitalization: TextCapitalization.words,
           ),
           cSizedBox15,
         ],
@@ -83,11 +88,13 @@ class _ZoneSection extends StatelessWidget {
     required this.zoneId,
     required this.zoneName,
     required this.controller,
+    required this.isAdmin,
   });
 
   final String zoneId;
   final String zoneName;
   final RegisteredMembersScreenController controller;
+  final bool isAdmin; // <-- Add this
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +123,11 @@ class _ZoneSection extends StatelessWidget {
                   final member = members[index];
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 5),
-                    child: MemberTile(member: member),
+                    child: MemberTile(
+                      member: member,
+                      isAdmin: isAdmin,
+                      onDelete: () => controller.deleteMember(member.id),
+                    ),
                   );
                 }),
             ],

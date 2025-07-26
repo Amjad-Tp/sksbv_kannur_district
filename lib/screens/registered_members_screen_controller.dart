@@ -1,11 +1,14 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sksbv_kannur_jilla/functions/alert_with_background_blur.dart';
 import 'package:sksbv_kannur_jilla/functions/maps.dart';
 import 'package:sksbv_kannur_jilla/models/registration_model.dart';
 import 'package:sksbv_kannur_jilla/services/registration_services.dart';
 
 class RegisteredMembersScreenController extends GetxController {
   final refreshController = RefreshController(initialRefresh: false);
+  final adminRefreshController = RefreshController(initialRefresh: false);
   final _service = RegistrationServices();
   final isLoading = false.obs;
 
@@ -76,5 +79,18 @@ class RegisteredMembersScreenController extends GetxController {
   /// Update search text
   void updateSearch(String value) {
     searchQuery.value = value;
+  }
+
+  void deleteMember(String memberId) {
+    alertWithBackgroundBlur(
+      title: "Delete Member",
+      widget: const Text("Are you sure you want to delete this member?"),
+      function: () async {
+        await _service.deleteMember(memberId);
+        onRefresh();
+        Get.back();
+      },
+      buttonName: 'Yes',
+    );
   }
 }

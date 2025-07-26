@@ -5,7 +5,7 @@ import 'package:sksbv_kannur_jilla/functions/constants.dart';
 
 void alertWithBackgroundBlur({
   required String title,
-  required Widget widget,
+  Widget? widget,
   required VoidCallback function,
   VoidCallback? backButtonFunction,
   required String buttonName,

@@ -34,4 +34,11 @@ class RegistrationServices {
 
     return snapshot.docs.map((doc) => MemberModel.fromMap(doc.data())).toList();
   }
+
+  Future<void> deleteMember(String memberId) async {
+    await FirebaseFirestore.instance
+        .collection('members')
+        .doc(memberId)
+        .delete();
+  }
 }
