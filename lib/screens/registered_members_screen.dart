@@ -126,7 +126,8 @@ class _ZoneSection extends StatelessWidget {
                     child: MemberTile(
                       member: member,
                       isAdmin: isAdmin,
-                      onDelete: () => controller.deleteMember(member.id),
+                      onDelete: () =>
+                          controller.deleteMember(member.zoneId, member.id),
                     ),
                   );
                 }),

@@ -46,6 +46,12 @@ class RegisteredMembersScreenController extends GetxController {
     if (searchQuery.isEmpty) return base;
 
     final query = searchQuery.value.toLowerCase();
+
+    // Check if the zone name itself matches
+    final zoneNameMatches = zoneMapping[zoneId]!.toLowerCase().contains(query);
+    if (zoneNameMatches) return base; // Show all members if zone name matched
+
+    // Otherwise filter by member name/position
     return base.where((m) {
       return m.name.toLowerCase().contains(query) ||
           m.position.toLowerCase().contains(query);
@@ -81,14 +87,13 @@ class RegisteredMembersScreenController extends GetxController {
     searchQuery.value = value;
   }
 
-  void deleteMember(String memberId) {
+  void deleteMember(String zoneId, String memberId) {
     alertWithBackgroundBlur(
       title: "Delete Member",
       widget: const Text("Are you sure you want to delete this member?"),
       function: () async {
-        await _service.deleteMember(memberId);
+        await _service.deleteMember(zoneId, memberId);
         onRefresh();
-        Get.back();
       },
       buttonName: 'Yes',
     );
