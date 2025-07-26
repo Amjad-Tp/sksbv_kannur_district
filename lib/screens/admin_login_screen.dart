@@ -65,16 +65,13 @@ class AdminLoginScreen extends StatelessWidget {
                   cSizedBox20,
                   CustomTextField(
                     controller: userNameController,
-                    keyboardType: TextInputType.number,
                     labelText: 'User Name',
                     hintText: 'User Name',
                     prefixIcon: Icons.person_3_rounded,
-                    capitalization: TextCapitalization.words,
                   ),
                   cSizedBox20,
                   CustomTextField(
                     controller: passwordController,
-                    keyboardType: TextInputType.number,
                     labelText: 'Password',
                     hintText: 'password',
                     prefixIcon: Icons.lock_rounded,
@@ -117,7 +114,7 @@ class AdminLoginScreen extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/login_background.jpg', fit: BoxFit.cover),
+          Image.asset('assets/images/loginbackground.jpg', fit: BoxFit.cover),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Container(),

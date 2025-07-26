@@ -10,34 +10,38 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width > 600;
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 800),
-      child: Padding(
-        padding: screenPadding,
-        child: Column(
-          children: [
-            _buildImage(isWide),
-            cSizedBox40,
-            _buildRegisterSection(context),
-          ],
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: SingleChildScrollView(
+          padding: screenPadding,
+          child: Column(
+            children: [
+              _buildImage(isWide),
+              cSizedBox40,
+              _buildRegisterSection(context),
+            ],
+          ),
         ),
       ),
     );
   }
 
   //----Registration button with information
-  Row _buildRegisterSection(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Column _buildRegisterSection(BuildContext context) {
+    return Column(
       children: [
-        const Flexible(
-          child: Text(
-            'Click here to Register JIlla Thahdees (ജില്ല തഹ്ദീസിനു രജിസ്റ്റർ ചെയ്യാൻ ഇവിടെ click ചെയ്യുക)',
-          ),
+        const Text(
+          'Click here to Register JIlla Thahdees (ജില്ല തഹ്ദീസിനു രജിസ്റ്റർ ചെയ്യാൻ ഇവിടെ click ചെയ്യുക)',
         ),
-        buildThemeTextButton(
-          function: () => Get.to(() => const ZoneLoginScreen()),
-          name: "Register",
+        cSizedBox15,
+        SizedBox(
+          width: double.infinity,
+          child: buildThemeTextButton(
+            function: () => Get.to(() => const ZoneLoginScreen()),
+            name: "Register",
+          ),
         ),
       ],
     );

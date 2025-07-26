@@ -125,7 +125,7 @@ class ZoneLoginScreen extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('assets/images/login_background.jpg', fit: BoxFit.cover),
+          Image.asset('assets/images/loginbackground.jpg', fit: BoxFit.cover),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
             child: Container(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sksbv_kannur_jilla/controller/text_field_controller.dart';
 import 'package:sksbv_kannur_jilla/functions/constants.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -9,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final IconData? prefixIcon;
-  final bool? obscureText;
+  final bool obscureText;
   final ValueChanged<String>? onChanged;
   final int? maxLength;
   final String? prefixText;
@@ -23,7 +25,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.prefixIcon,
-    this.obscureText,
+    this.obscureText = false,
     this.onChanged,
     this.maxLength,
     this.prefixText,
@@ -32,13 +34,20 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textFieldController = Get.find<TextFieldController>();
+    return obscureText
+        ? Obx(() => _buildTextField(textFieldController))
+        : _buildTextField(textFieldController);
+  }
+
+  TextFormField _buildTextField(TextFieldController textFieldController) {
     return TextFormField(
       cursorColor: blueNormal,
       controller: controller,
       style: const TextStyle(fontSize: 13, fontWeight: fw500),
       readOnly: readOnly ?? false,
       keyboardType: keyboardType ?? TextInputType.text,
-      obscureText: obscureText ?? false,
+      obscureText: obscureText ? textFieldController.obscureText.value : false,
       onChanged: onChanged,
       maxLength: maxLength,
       textCapitalization: capitalization ?? TextCapitalization.none,
@@ -53,9 +62,21 @@ class CustomTextField extends StatelessWidget {
           color: blackColor.withValues(alpha: .7),
           fontSize: 13,
         ),
+        suffixIcon: obscureText
+            ? IconButton(
+                icon: Icon(
+                  textFieldController.obscureText.value
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                  color: blackColor,
+                  size: 20,
+                ),
+                onPressed: textFieldController.toggleVisibility,
+              )
+            : null,
         hintStyle: const TextStyle(color: greyColor),
         prefixText: prefixText,
-        prefixStyle: const TextStyle(color: lightBlackColor),
+        prefixStyle: const TextStyle(color: lightBlackColor, fontSize: 12),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: royalBlue, width: 2),

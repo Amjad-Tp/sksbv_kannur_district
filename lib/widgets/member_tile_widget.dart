@@ -67,6 +67,7 @@ class MemberTile extends StatelessWidget {
                 ),
               ),
             ),
+          cSizedBoxWidth10,
           if (isAdmin) ...[
             IconButton(
               icon: const Icon(Icons.delete, color: Colors.red),

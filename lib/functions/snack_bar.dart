@@ -19,6 +19,7 @@ void showSuccessSnackbar({required String message}) {
         style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
       ),
     ),
+    duration: const Duration(seconds: 2),
     margin: const EdgeInsets.all(20),
   );
 }
@@ -40,7 +41,7 @@ void showErrorSnackbar({required String message}) {
         style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
       ),
     ),
-    // duration: const Duration(seconds: 4),
+    duration: const Duration(seconds: 2),
     margin: const EdgeInsets.all(20),
   );
 }
